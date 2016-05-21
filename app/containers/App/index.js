@@ -7,12 +7,14 @@
  */
 
 import React from 'react';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 function App(props) {
   return (
-    <div>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
       {props.children}
-    </div>
+    </MuiThemeProvider>
   );
 }
 

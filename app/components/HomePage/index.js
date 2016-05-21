@@ -6,9 +6,13 @@
 
 import React from 'react';
 
+import VoteSystem from 'containers/VoteSystem'
+
 export function HomePage() {
   return (
-    <h1>This is the Homepage!</h1>
+    <main>
+      <VoteSystem />
+    </main>
   );
 }
 

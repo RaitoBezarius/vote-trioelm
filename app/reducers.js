@@ -6,6 +6,7 @@
 import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { CONNECTED, DISCONNECT, RECEIVE_DATA } from 'constants/ActionTypes'
 
 /*
  * routeReducer
@@ -19,6 +20,12 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
 });
+
+const socketInitialState = fromJS({
+  socket: null,
+  votes: [],
+  videos: []
+})
 
 /**
  * Merge route into the global application state
@@ -34,6 +41,36 @@ function routeReducer(state = routeInitialState, action) {
       return state;
   }
 }
+
+/**
+ * Handle new data from WebSocket
+ *
+ */
+function dataReducer(state = socketInitialState, action) {
+  const data = action.payload.data
+  console.log('TODO: do something with', data)
+  console.log('hint: deserialize the data, etc...')
+  return state
+}
+
+function socketReducer(state = socketInitialState, action) {
+  if (action.type === CONNECTED) {
+    return state.merge({
+      socket: action.payload
+    })
+  }
+
+  if (action.type === RECEIVE_DATA) {
+    return dataReducer(state, action)
+  }
+
+  if (action.type === DISCONNECTED) {
+    return state.merge({
+      socket: null
+    })
+  }
+}
+      
 
 /**
  * Creates the main reducer with the asynchronously loaded ones
